@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevTools Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #data { margin-top: 20px; }
+        h1 { color: blue; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Chrome DevTools Demo</h1>
+    <p>Learn to use DevTools!</p>
+    <button id="loadData" hidden>Load Data from API</button>
+    <div id="data"></div>
+    <script>
+        console.log('DevTools Demo: API Monitoring Started');
+
+        document.getElementById('loadData').addEventListener('click', function() {
+            console.log('Loading data from API...');
+            // Fetch data from a public API
+            fetch('htttps://jsonplaceholder.typicode.com/posts')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data fetched:', data);
+                    displayData(data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        });
+
+        function displayData(data) {
+            const dataDiv = document.getElementById('data');
+            dataDiv.innerHTML = '<h2>Received Data:</h2>';
+            data.forEach(item => {
+                const postElement = document.createElement('div');
+                postElement.innerHTML = `<strong>${item.title}</strong>: ${item.body}`;
+                dataDiv.appendChild(postElement);
+            });
+        }
+
+        // Performance monitoring example
+        if ('performance' in window) {
+            console.log('Performance API supported. Monitoring performance on page load.');
+            window.addEventListener('load', () => {
+                const performanceEntries = performance.getEntriesByType("navigation");
+                performanceEntries.forEach(entry => {
+                    console.log('Page load time:', entry.loadEventEnd - entry.startTime, 'ms');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
