@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; }
+h1 { color: blue;}
+#data { margin-top: 20px; }
+#displayData {display:none;}
+#callAPIs {display:none}
+.scrollable { height: 300px; overflow-x: hidden; overflow-y: auto;}
